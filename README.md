@@ -3,6 +3,7 @@
 ### Linux
 > [!IMPORTANT]
 > These steps are for Debian based Linux systems only
+
 Firstly, navigate to a directory where you want the project to reside then clone the project.
 ```
 git clone https://github.com/JulianoF/TicketBooking-SpringBootApplication.git
