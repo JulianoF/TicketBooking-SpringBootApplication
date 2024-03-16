@@ -15,4 +15,5 @@ public class HomePageController {
 		model.addAttribute("name", name);
 		return "greeting";
 	}
+	
 }
