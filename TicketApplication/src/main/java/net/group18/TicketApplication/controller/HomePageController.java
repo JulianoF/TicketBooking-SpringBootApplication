@@ -1,4 +1,4 @@
-package net.group18.TicketApplication;
+package net.group18.TicketApplication.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class HomePageController {
 
-	@GetMapping("/greeting")
-	public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+	@GetMapping("/booking")
+	public String booking(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 		model.addAttribute("name", name);
-		return "greeting";
+		return "booking";
+	}
+	@GetMapping("/login")
+	public String login(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		model.addAttribute("name", name);
+		return "login";
 	}
 	
 }

@@ -1,4 +1,4 @@
-package net.group18.TicketApplication;
+package net.group18.TicketApplication.service;
 
 import org.springframework.stereotype.Service;
 

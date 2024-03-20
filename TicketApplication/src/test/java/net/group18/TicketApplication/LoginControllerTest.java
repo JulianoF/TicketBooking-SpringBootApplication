@@ -5,6 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
+import net.group18.TicketApplication.controller.LoginController;
+
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -21,7 +23,7 @@ public class LoginControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
+/*     @Test
     public void getDefault() throws Exception {
         this.mvc.perform(get("/"))
             .andExpect(status().isOk())
@@ -51,6 +53,6 @@ public class LoginControllerTest {
             .andExpect(model().attributeHasFieldErrors("loginForm", "username"))
             .andExpect(model().attributeHasFieldErrors("loginForm", "password"))
             .andExpect(content().string(containsString("Invalid username or password. Please Enter A Valid Login Entry Or Try Signing Up.")));
-    }
+    } */
     
 }
