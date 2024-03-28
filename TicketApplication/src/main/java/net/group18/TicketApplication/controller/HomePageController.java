@@ -10,15 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class HomePageController {
 
+	@GetMapping("/")
+	public String index(Model model) {
+		return "index";
+	}
+
 	@GetMapping("/booking")
-	public String booking(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-		model.addAttribute("name", name);
+	public String booking(Model model) {
 		return "booking";
 	}
+
 	@GetMapping("/login")
-	public String login(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-		model.addAttribute("name", name);
+	public String login(Model model) {
 		return "login";
+	}
+
+	@GetMapping("/pastbooking")
+	public String pastBooking(Model model) {
+		return "pastbooking";
+	}
+
+	@GetMapping("/register")
+	public String register(Model model) {
+		return "registration";
 	}
 	
 }

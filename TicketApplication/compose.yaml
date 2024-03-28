@@ -22,6 +22,6 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mydatabase
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ticketDatabase
       SPRING_DATASOURCE_USERNAME: dev1
       SPRING_DATASOURCE_PASSWORD: ticket1!@
