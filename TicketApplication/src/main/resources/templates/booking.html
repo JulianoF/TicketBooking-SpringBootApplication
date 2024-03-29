@@ -35,9 +35,73 @@
       </nav>
 
     
-    <div class="container-fluid fill-height">
-      
+        <!-- Search Area -->
+  <!-- Search Area -->
+  <div class="container mt-4 py-3 pb-5">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <!-- Search Form -->
+        <form action="#" th:action="@{/search}" method="get">
+          <div class="input-group mb-3">
+            <div class="mb-3">
+              <label for="startDate" class="form-label">Start Date</label>
+              <input type="text" class="form-control" id="startDate" name="startDate" required>
+            </div>
+            <div class="mb-3">
+              <label for="returnDate" class="form-label">Return Date</label>
+              <input type="text" class="form-control" id="returnDate" name="returnDate" required>
+            </div>
+            <input type="text" class="form-control" placeholder="Search for flights" name="searchInput">
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+        </form>
+        <h1>TESTIES TESTIES</h1>
+        <!-- Flight Listings -->
+        <div id="flightListings">
+          <div th:if="${not #lists.isEmpty(flights)}">
+            <div th:each="flight : ${flights}">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title" th:text="${flight.origin} + ' to ' + ${flight.destination}"></h5>
+                  <p class="card-text" th:text="'Departure Time: ' + ${flight.departure}"></p>
+                  <p class="card-text" th:text="'Price: ' + ${flight.price}"></p>
+                  <!-- Add booking button -->
+                  <a href="#" class="btn btn-primary">Book Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div th:if="${#lists.isEmpty(flights)}">
+            <p>No flights found.</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Booking Form -->
+    <div class="row mt-5 py-3">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Book Your Flight</h5>
+            <form id="bookingForm">
+              <!-- Add your form fields here -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <!-- Add more fields as needed -->
+              <button type="submit" class="btn btn-primary">Book Now</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <footer
     class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
