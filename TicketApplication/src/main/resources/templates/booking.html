@@ -42,20 +42,22 @@
       <div class="col-md-6 mx-auto">
         <!-- Search Form -->
         <form action="#" th:action="@{/search}" method="get">
-          <div class="input-group mb-3">
-            <div class="mb-3">
+          <div class="input-group row align-items-center mb-3">
+            <div class="col mb-3">
               <label for="startDate" class="form-label">Start Date</label>
-              <input type="text" class="form-control" id="startDate" name="startDate" required>
+              <input type="date" class="form-control" id="startDate" name="startDate" required>
             </div>
-            <div class="mb-3">
+            <div class="col mb-3">
               <label for="returnDate" class="form-label">Return Date</label>
-              <input type="text" class="form-control" id="returnDate" name="returnDate" required>
+              <input type="date" class="form-control" id="returnDate" name="returnDate" required>
             </div>
-            <input type="text" class="form-control" placeholder="Search for flights" name="searchInput">
-            <button class="btn btn-primary" type="submit">Search</button>
+            <div class ="row mx-auto md-6">
+              <input type="text" class="form-control mb-3" placeholder="Input Airport Code ex. LAX" name="searchInput">
+              <button class="btn btn-primary w-50 mx-auto " type="submit">Search</button>
+            </div>
           </div>
         </form>
-        <h1>TESTIES TESTIES</h1>
+       
         <!-- Flight Listings -->
         <div id="flightListings">
           <div th:if="${not #lists.isEmpty(flights)}">
