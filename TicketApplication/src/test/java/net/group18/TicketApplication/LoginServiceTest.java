@@ -3,19 +3,21 @@ package net.group18.TicketApplication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import net.group18.TicketApplication.service.AuthService;
+
 
 @SpringBootTest
 public class LoginServiceTest {
     
-    private AuthService authService; //service under test
+    /* private LoginService authService; //service under test
 
+   
     @BeforeEach
     public void setUp() {
-        this.authService = new AuthService();
-    }
+        this.authService = new LoginService();
+    } */
 
 
 /*     @Test

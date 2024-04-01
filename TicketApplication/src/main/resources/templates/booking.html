@@ -33,9 +33,7 @@
           </div>
         </div>
       </nav>
-
-    
-        <!-- Search Area -->
+  
   <!-- Search Area -->
   <div class="container mt-4 py-3 pb-5">
     <div class="row">
@@ -45,11 +43,11 @@
           <div class="input-group row align-items-center mb-3">
             <div class="col mb-3">
               <label for="startDate" class="form-label">Start Date</label>
-              <input type="date" class="form-control" id="startDate" name="startDate" required>
+              <input type="date" class="form-control" id="startDate" name="startDate" >
             </div>
             <div class="col mb-3">
               <label for="returnDate" class="form-label">Return Date</label>
-              <input type="date" class="form-control" id="returnDate" name="returnDate" required>
+              <input type="date" class="form-control" id="returnDate" name="returnDate" >
             </div>
             <div class ="row mx-auto md-6">
               <input type="text" class="form-control mb-3" placeholder="Input Airport Code ex. LAX" name="searchInput">
@@ -57,52 +55,90 @@
             </div>
           </div>
         </form>
-       
-        <!-- Flight Listings -->
-        <div id="flightListings">
-          <div th:if="${not #lists.isEmpty(flights)}">
-            <div th:each="flight : ${flights}">
-              <div class="card mb-3">
-                <div class="card-body">
-                  <h5 class="card-title" th:text="${flight.origin} + ' to ' + ${flight.destination}"></h5>
-                  <p class="card-text" th:text="'Departure Time: ' + ${flight.departure}"></p>
-                  <p class="card-text" th:text="'Price: ' + ${flight.price}"></p>
-                  <!-- Add booking button -->
-                  <a href="#" class="btn btn-primary">Book Now</a>
+
+        <div th:if = "${invalidDateRange}">
+          <div class="alert alert-danger" role="alert">
+            The Start Date Cannot be Later than the Return Date! Please Try Again!
+          </div>
+        </div>
+          <!-- OUtboundFlight Listings -->
+          <div id="departflightListings">
+            <h4> Departing Flights</h4>
+            <div th:if="${not #lists.isEmpty(departingFlights)}">
+              <div th:each="flight : ${departingFlights}">
+                <div class="card mb-3">
+                  <form action="#" th:action="@{/createbooking}" method="get">
+                  <div class="card-body">
+                    <h5 class="card-title" th:text="${flight.getOrigin()} + ' to ' + ${flight.getDestination()}"></h5>
+                    <p class="card-text" th:text="'Departure Date: ' + ${flight.getDepartureDate()}"></p>
+                    <p class="card-text" th:text="'Departure Time: ' + ${flight.getDepartureTime()}"></p>
+                    <p class="card-text" th:text="'Total Duration: ' + ${flight.getTotalDuration()}"></p>
+                    <p class="card-text" th:text="'Price: $' + ${flight.getPrice()}"></p>
+
+                    <input type="hidden" name="origin" th:value="${flight.getOrigin()}" />
+                    <input type="hidden" name="destination" th:value="${flight.getDestination()}" />
+                    <input type="hidden" name="departureDate" th:value="${flight.getDepartureDate()}" />
+                    <input type="hidden" name="departureTime" th:value="${flight.getDepartureTime()}" />
+                    <input type="hidden" name="totalDuration" th:value="${flight.getTotalDuration()}" />
+                    <input type="hidden" name="price" th:value="${flight.getPrice()}" />
+
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="returnFlightCheckbox">
+                        <label class="form-check-label" for="returnFlightCheckbox">
+                            Require Return Flight
+                        </label>
+                    </div>
+                    
+                    <button type = "submit" class="btn btn-primary">Book Now</button>
+                  </div>
+                  </form>
                 </div>
               </div>
             </div>
+            <div th:if="${#lists.isEmpty(departingFlights)}">
+              <p>No Departing flights found.</p>
+            </div>
+            
           </div>
-          <div th:if="${#lists.isEmpty(flights)}">
-            <p>No flights found.</p>
+
+          <!-- INbound Flight Listings -->
+          <div id="returnflightListings">
+            <h4> Return Flights</h4>
+            <div th:if="${not #lists.isEmpty(returningFlights)}">
+              <div th:each="flight : ${returningFlights}">
+                <div class="card mb-3">
+                  <form action="#" th:action="@{/createbooking}" method="get">
+                  <div class="card-body">
+                    <h5 class="card-title" th:text="${flight.getOrigin()} + ' to ' + ${flight.getDestination()}"></h5>
+                    <p class="card-text" th:text="'Departure Date: ' + ${flight.getDepartureDate()}"></p>
+                    <p class="card-text" th:text="'Departure Time: ' + ${flight.getDepartureTime()}"></p>
+                    <p class="card-text" th:text="'Total Duration: ' + ${flight.getTotalDuration()}"></p>
+                    <p class="card-text" th:text="'Price: $' + ${flight.getPrice()}"></p>
+
+                    <input type="hidden" name="origin" th:value="${flight.getOrigin()}" />
+                    <input type="hidden" name="destination" th:value="${flight.getDestination()}" />
+                    <input type="hidden" name="departureDate" th:value="${flight.getDepartureDate()}" />
+                    <input type="hidden" name="departureTime" th:value="${flight.getDepartureTime()}" />
+                    <input type="hidden" name="totalDuration" th:value="${flight.getTotalDuration()}" />
+                    <input type="hidden" name="price" th:value="${flight.getPrice()}" />
+
+                    <!-- Add booking button -->
+                    <button type = "submit" class="btn btn-primary">Book Now</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div th:if="${#lists.isEmpty(returningFlights)}">
+              <p>No Return flights found.</p>
+            </div>
           </div>
+
         </div>
+
       </div>
     </div>
 
-    <!-- Booking Form -->
-    <div class="row mt-5 py-3">
-      <div class="col-md-6 mx-auto">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Book Your Flight</h5>
-            <form id="bookingForm">
-              <!-- Add your form fields here -->
-              <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-              </div>
-              <!-- Add more fields as needed -->
-              <button type="submit" class="btn btn-primary">Book Now</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
     <footer

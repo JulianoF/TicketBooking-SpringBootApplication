@@ -42,6 +42,10 @@
             class="img-fluid" alt="Sample image">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+
+          <div th:if = "${error}" class="alert alert-danger" role="alert">
+              Account Login Was Unsucessful
+          </div>
           
           <form action="/loginUser" method="post">
             

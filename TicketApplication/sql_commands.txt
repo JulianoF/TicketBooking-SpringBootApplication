@@ -1,0 +1,77 @@
+CREATE TABLE flight (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    origin VARCHAR(255),
+    destination VARCHAR(255),
+    departure_date DATE,
+    departure_time TIME,
+    total_duration VARCHAR(10), -- Format: 'HH:MM'
+    price DECIMAL(10, 2)
+);
+
+
+INSERT INTO flight (origin, destination, departure_date, departure_time, total_duration, price) VALUES
+('YYZ', 'LHR', '2024-04-01', '08:00', '06:30', 500.00),
+('LAX', 'CDG', '2024-04-02', '10:30', '09:15', 700.00),
+('ORD', 'NRT', '2024-04-03', '12:15', '11:00', 900.00),
+('MIA', 'SYD', '2024-04-04', '14:45', '14:45', 1200.00),
+('SFO', 'DXB', '2024-04-05', '16:30', '15:30', 1000.00);
+
+INSERT INTO flight (origin, destination, departure_date, departure_time, total_duration, price) VALUES
+('SFO', 'LHR', '2024-04-16', '08:00', '10:30', 700.00),
+('SFO', 'CDG', '2024-04-17', '09:30', '11:45', 800.00),
+('SFO', 'NRT', '2024-04-18', '11:45', '12:45', 900.00),
+('SFO', 'SYD', '2024-04-19', '13:30', '15:00', 1000.00),
+('SFO', 'DXB', '2024-04-20', '15:15', '16:45', 1100.00),
+('LAX', 'JFK', '2024-04-21', '08:00', '06:30', 500.00),
+('LAX', 'ATL', '2024-04-22', '10:30', '09:15', 600.00),
+('LAX', 'DFW', '2024-04-23', '12:15', '11:00', 700.00),
+('LAX', 'DEN', '2024-04-24', '14:45', '14:45', 800.00),
+('LAX', 'PHX', '2024-04-25', '16:30', '15:30', 900.00),
+('JFK', 'MIA', '2024-04-26', '08:30', '07:00', 600.00),
+('JFK', 'ORD', '2024-04-27', '09:45', '08:45', 700.00),
+('JFK', 'SEA', '2024-04-28', '11:00', '09:15', 800.00),
+('JFK', 'MSP', '2024-04-29', '13:15', '10:30', 900.00),
+('JFK', 'DTW', '2024-04-30', '15:30', '16:45', 1000.00);
+
+INSERT INTO flight (origin, destination, departure_date, departure_time, total_duration, price) VALUES
+('LHR', 'YYZ', DATE_ADD('2024-04-01', INTERVAL 1 DAY), '10:30', '06:30', 500.00),
+('CDG', 'LAX', DATE_ADD('2024-04-02', INTERVAL 2 DAY), '12:15', '09:15', 700.00),
+('NRT', 'ORD', DATE_ADD('2024-04-03', INTERVAL 3 DAY), '14:45', '11:00', 900.00),
+('SYD', 'MIA', DATE_ADD('2024-04-04', INTERVAL 4 DAY), '16:30', '14:45', 1200.00),
+('DXB', 'SFO', DATE_ADD('2024-04-05', INTERVAL 5 DAY), '18:00', '15:30', 1000.00),
+('LHR', 'SFO', DATE_ADD('2024-04-16', INTERVAL 6 DAY), '10:30', '10:30', 700.00),
+('CDG', 'SFO', DATE_ADD('2024-04-17', INTERVAL 7 DAY), '12:00', '11:45', 800.00),
+('NRT', 'SFO', DATE_ADD('2024-04-18', INTERVAL 8 DAY), '13:45', '12:45', 900.00),
+('SYD', 'SFO', DATE_ADD('2024-04-19', INTERVAL 9 DAY), '15:30', '15:00', 1000.00),
+('DXB', 'SFO', DATE_ADD('2024-04-20', INTERVAL 10 DAY), '17:00', '16:45', 1100.00),
+('JFK', 'LAX', DATE_ADD('2024-04-21', INTERVAL 11 DAY), '10:30', '06:30', 500.00),
+('ATL', 'LAX', DATE_ADD('2024-04-22', INTERVAL 12 DAY), '12:15', '09:15', 600.00),
+('DFW', 'LAX', DATE_ADD('2024-04-23', INTERVAL 13 DAY), '14:45', '11:00', 700.00),
+('DEN', 'LAX', DATE_ADD('2024-04-24', INTERVAL 14 DAY), '16:30', '14:45', 800.00),
+('PHX', 'LAX', DATE_ADD('2024-04-25', INTERVAL 15 DAY), '18:00', '15:30', 900.00),
+('MIA', 'JFK', DATE_ADD('2024-04-26', INTERVAL 16 DAY), '12:00', '07:00', 600.00),
+('ORD', 'JFK', DATE_ADD('2024-04-27', INTERVAL 17 DAY), '13:45', '08:45', 700.00),
+('SEA', 'JFK', DATE_ADD('2024-04-28', INTERVAL 18 DAY), '15:30', '09:15', 800.00),
+('MSP', 'JFK', DATE_ADD('2024-04-29', INTERVAL 19 DAY), '17:15', '10:30', 900.00),
+('DTW', 'JFK', DATE_ADD('2024-04-30', INTERVAL 20 DAY), '19:00', '16:45', 1000.00);
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255) 
+);
+
+CREATE TABLE booking (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    departure_flight_id INT,
+    FOREIGN KEY (departure_flight_id) REFERENCES flight(id),
+    return_flight_id INT,
+    FOREIGN KEY (return_flight_id) REFERENCES flight(id),
+    booking_date DATE,
+    booking_time TIME,
+    total_duration_minutes INT
+);
