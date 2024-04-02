@@ -20,12 +20,6 @@ public class BookingService {
     @Autowired
     private FlightRepository flightRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     public List<Flight> findFlightsByOrigin(String origin) {
         return flightRepository.findByOrigin(origin);
     }
@@ -53,50 +47,6 @@ public class BookingService {
     public Flight getFlightByOriginAndDestinationAndDepartureDate(String origin, String destination, LocalDate departureDate){
         return flightRepository.getFlightByOriginAndDestinationAndDepartureDate( origin, destination, departureDate);
     }
-    public void createSingleFlightBooking(String origin, String destination, String departureDate, String departureTime, String totalDuration, String price) {
-        LocalDate depart = LocalDate.parse(departureDate);
 
-        Booking book = new Booking();
-        book.setUser(userRepository.findByEmail("johndoe@example.com"));
-        Flight temp = getFlightByOriginAndDestinationAndDepartureDate(origin,destination,depart);
-        book.setDepartureFlight(temp);
-        book.setReturnFlight(null);
-        book.setBookingDate(depart);
-        book.setBookingTime(departureTime);
-        try {
-            book.setTotalDurationMinutes(parseDuration(totalDuration));
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        bookingRepository.save(book);
-
-    }
-
-    private static int parseDuration(String durationStr) throws ParseException {
-        if (durationStr == null || durationStr.isEmpty()) {
-          throw new ParseException("Invalid duration string: empty or null", 0);
-        }
-      
-        String[] parts = durationStr.split(":");
-        if (parts.length != 2) {
-          throw new ParseException("Invalid duration format: must be HH:MM", 0);
-        }
-      
-        try {
-          int hours = Integer.parseInt(parts[0]);
-          int minutes = Integer.parseInt(parts[1]);
-      
-          if (minutes < 0 || minutes > 59) {
-            throw new ParseException("Invalid duration values: minutes must be between 0 and 59", 0);
-          }
-      
-          return hours * 60 + minutes;
-        } catch (NumberFormatException e) {
-          throw new ParseException("Invalid duration format: contains non-numeric characters", 0);
-        }
-      }
-      
     
 }

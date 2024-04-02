@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,14 +19,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import net.group18.TicketApplication.entity.Booking;
 import net.group18.TicketApplication.entity.Flight;
 import net.group18.TicketApplication.service.BookingService;
+import net.group18.TicketApplication.service.CreateBookingService;
 
 @Controller
 public class BookingController {
 
 	@Autowired
     private BookingService flightService;
+
+	@Autowired
+    private CreateBookingService bookService;
 
     @GetMapping("/search")
 	public String lookup(@RequestParam("startDate")  @DateTimeFormat(pattern = "yyyy-MM-dd") String startDateString,
@@ -102,15 +108,35 @@ public class BookingController {
 
 		} else {
 
-			flightService.createSingleFlightBooking(origin, destination, departureDate, departureTime, totalDuration, price);
+			bookService.createSingleFlightBooking(origin, destination, departureDate, departureTime, totalDuration, price);
 			
+			List<Booking> bookings = bookService.findByuser_id(Long.valueOf(3));
+			model.addAttribute("bookings", bookings);
 		}
 		
 		return "pastbooking";
 	}
 
 	@PostMapping("/createroundtrip")
-	public String createRound(){
+	public String createRound(@RequestParam("origin") String origin,
+							 @RequestParam("destination") String destination,
+							 @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String departureDate,
+							 @RequestParam("departureTime") String departureTime,
+							 @RequestParam("totalDuration") String totalDuration,
+							 @RequestParam("price") String price,
+							 @RequestParam("cOrigin") String cOrigin,
+							 @RequestParam("cDestination") String cDestination,
+							 @RequestParam("cDepartureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String cDepartureDate,
+						 	 @RequestParam("cDepartureTime") String cDepartureTime,
+							 @RequestParam("cTotalDuration") String cTotalDuration,
+							 @RequestParam("cPrice") String cPrice,
+							 Model model){
+
+
+		bookService.createRoundTripBooking(origin, destination, departureDate, departureTime, totalDuration, price, cOrigin, cDestination, cDepartureDate, cDepartureTime, cTotalDuration, cPrice);
+		List<Booking> bookings = bookService.findByuser_id(Long.valueOf(3));
+		model.addAttribute("bookings", bookings);
+
 		return "pastbooking";
 	}
 
