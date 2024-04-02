@@ -19,8 +19,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import jakarta.servlet.Filter;
+
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SecurityContextConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -57,13 +66,15 @@ public class SecurityConfig{
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
 
         // Disable CSRF protection
-        http.csrf().disable();
+        http.csrf(AbstractHttpConfigurer::disable);
                  
-        http.authorizeHttpRequests(auth ->
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll();
             auth.requestMatchers("/pastbooking").authenticated()
             .anyRequest()
-            .permitAll() 
-            ) 
+            .permitAll();
+            
+        }) 
             .formLogin(login ->
                 login
                 .loginPage("/login")
@@ -80,22 +91,15 @@ public class SecurityConfig{
             session.sessionAuthenticationStrategy(sessionAuthenticationStrategy())
         ); 
 
+        http
+			.securityContext((securityContext) -> securityContext
+			.securityContextRepository(new RequestAttributeSecurityContextRepository())
+		);
 
 
         
         return http.build();
     }  
-
-    private AuthorizationDecision denyAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'denyAll'");
-    }
-
-
-    private AuthorizationDecision permitAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'permitAll'");
-    }
 
 
     @Bean

@@ -75,3 +75,7 @@ CREATE TABLE booking (
     booking_time TIME,
     total_duration_minutes INT
 );
+
+INSERT INTO user (first_name, last_name, email, password)
+VALUES ('John', 'Doe', 'johndoe@example.com', 'password'),
+       ('Jane', 'Smith', 'janesmith@example.com', 'password');

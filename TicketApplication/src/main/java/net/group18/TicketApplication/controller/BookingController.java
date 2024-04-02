@@ -65,12 +65,13 @@ public class BookingController {
 
 	
 	@PostMapping("/createbooking")
-	public String lookup(@RequestParam("origin") String origin,
+	public String create(@RequestParam("origin") String origin,
 						 @RequestParam("destination") String destination,
 						 @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String departureDate,
 						 @RequestParam("departureTime") String departureTime,
 						 @RequestParam("totalDuration") String totalDuration,
 						 @RequestParam("price") String price,
+						 @RequestParam(value = "returnFlight", required = false) boolean returnFlight,
 						 Model model) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -81,8 +82,38 @@ public class BookingController {
 			System.out.println(username);
 
 		}
+		Flight flight = new Flight();
+		flight.setOrigin(origin);
+		flight.setDestination(destination);
+		flight.setDepartureDate(LocalDate.parse(departureDate));
+		flight.setDepartureTime(departureTime);
+		flight.setTotalDuration(totalDuration);
+		flight.setPrice(Double.parseDouble(price));
+
+		if (returnFlight) {
+
+			List<Flight> originOnly = flightService.findFlightsByDestinationAndOrigin(origin,destination);
+
+			model.addAttribute("requireReturnFlight", true); 
+			model.addAttribute("curFlight", flight); 
+			model.addAttribute("returningFlights", originOnly);
+			
+			return "extraflight";
+
+		} else {
+
+			flightService.createSingleFlightBooking(origin, destination, departureDate, departureTime, totalDuration, price);
+			
+		}
 		
-		return "booking";
+		return "pastbooking";
 	}
+
+	@PostMapping("/createroundtrip")
+	public String createRound(){
+		return "pastbooking";
+	}
+
+
     
 }

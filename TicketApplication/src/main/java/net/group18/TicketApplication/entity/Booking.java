@@ -1,5 +1,6 @@
 package net.group18.TicketApplication.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -31,10 +32,10 @@ public class Booking {
     private Flight returnFlight;
 
     @Column(name = "booking_date")
-    private Date bookingDate;
+    private LocalDate bookingDate;
 
     @Column(name = "booking_time")
-    private Date bookingTime;
+    private String bookingTime;
 
     @Column(name = "total_duration_minutes")
     private int totalDurationMinutes;
@@ -71,19 +72,19 @@ public class Booking {
         this.returnFlight = returnFlight;
     }
 
-    public Date getBookingDate() {
+    public LocalDate getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(Date bookingDate) {
+    public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
 
-    public Date getBookingTime() {
+    public String getBookingTime() {
         return bookingTime;
     }
 
-    public void setBookingTime(Date bookingTime) {
+    public void setBookingTime(String bookingTime) {
         this.bookingTime = bookingTime;
     }
 

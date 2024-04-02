@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Booking</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">BookMe Ticket Booking</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/booking">Book Now</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/pastbooking">Past Bookings</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+              Airline Ticket Booking Application
+            </span>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container mt-4 py-3 pb-5">
+        <div class="row">
+          <div class="col-md-6 mx-auto">
+
+            <h4> Your Current Selected Flight</h4>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${curFlight.getOrigin()} + ' to ' + ${curFlight.getDestination()}"></h5>
+                    <p class="card-text" th:text="'Departure Date: ' + ${curFlight.getDepartureDate()}"></p>
+                    <p class="card-text" th:text="'Departure Time: ' + ${curFlight.getDepartureTime()}"></p>
+                    <p class="card-text" th:text="'Total Duration: ' + ${curFlight.getTotalDuration()}"></p>
+                    <p class="card-text" th:text="'Price: $' + ${curFlight.getPrice()}"></p>
+                </div>
+            </div>
+
+            <div id="returnflightListings">
+                <h4> Return Flights</h4>
+                <div th:if="${not #lists.isEmpty(returningFlights)}">
+                <div th:each="flight : ${returningFlights}">
+                    <div class="card mb-3">
+                    <form action="#" th:action="@{/createroundtrip}" method="post">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${flight.getOrigin()} + ' to ' + ${flight.getDestination()}"></h5>
+                        <p class="card-text" th:text="'Departure Date: ' + ${flight.getDepartureDate()}"></p>
+                        <p class="card-text" th:text="'Departure Time: ' + ${flight.getDepartureTime()}"></p>
+                        <p class="card-text" th:text="'Total Duration: ' + ${flight.getTotalDuration()}"></p>
+                        <p class="card-text" th:text="'Price: $' + ${flight.getPrice()}"></p>
+
+                        <input type="hidden" name="origin" th:value="${flight.getOrigin()}" />
+                        <input type="hidden" name="destination" th:value="${flight.getDestination()}" />
+                        <input type="hidden" name="departureDate" th:value="${flight.getDepartureDate()}" />
+                        <input type="hidden" name="departureTime" th:value="${flight.getDepartureTime()}" />
+                        <input type="hidden" name="totalDuration" th:value="${flight.getTotalDuration()}" />
+                        <input type="hidden" name="price" th:value="${flight.getPrice()}" />
+
+                        <!-- Add booking button -->
+                        <button type = "submit" class="btn btn-primary">Book Now</button>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                <div th:if="${#lists.isEmpty(returningFlights)}">
+                <p>No Return flights found.</p>
+                </div>
+            </div>
+
+
+
+        </div>
+      </div>
+      </div>
+
+
+      <footer
+      class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+        <!-- Copyright -->
+        <div class="text-white mb-3 mb-md-0">
+            Copyright © 2024. All rights reserved.
+        </div>
+        <!-- Copyright -->
+  
+      </footer>

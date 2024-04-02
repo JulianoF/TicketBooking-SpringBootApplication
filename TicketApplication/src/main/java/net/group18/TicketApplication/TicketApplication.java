@@ -22,7 +22,7 @@ public class TicketApplication {
 		SpringApplication.run(TicketApplication.class, args);
 	}
 
-	
+/* 	
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
@@ -36,6 +36,6 @@ public class TicketApplication {
 			}
 
 		};
-	}
+	} */
 
 }

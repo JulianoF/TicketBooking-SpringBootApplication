@@ -75,6 +75,7 @@
                     <p class="card-text" th:text="'Total Duration: ' + ${flight.getTotalDuration()}"></p>
                     <p class="card-text" th:text="'Price: $' + ${flight.getPrice()}"></p>
 
+                    <input type="hidden" name="curFlight" th:value="${flight}" />
                     <input type="hidden" name="origin" th:value="${flight.getOrigin()}" />
                     <input type="hidden" name="destination" th:value="${flight.getDestination()}" />
                     <input type="hidden" name="departureDate" th:value="${flight.getDepartureDate()}" />
@@ -83,7 +84,7 @@
                     <input type="hidden" name="price" th:value="${flight.getPrice()}" />
 
                     <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="returnFlightCheckbox">
+                        <input name = "returnFlight" class="form-check-input" type="checkbox" id="returnFlightCheckbox">
                         <label class="form-check-label" for="returnFlightCheckbox">
                             Require Return Flight
                         </label>
@@ -107,7 +108,7 @@
             <div th:if="${not #lists.isEmpty(returningFlights)}">
               <div th:each="flight : ${returningFlights}">
                 <div class="card mb-3">
-                  <form action="#" th:action="@{/createbooking}" method="get">
+                  <form action="#" th:action="@{/createbooking}" method="post">
                   <div class="card-body">
                     <h5 class="card-title" th:text="${flight.getOrigin()} + ' to ' + ${flight.getDestination()}"></h5>
                     <p class="card-text" th:text="'Departure Date: ' + ${flight.getDepartureDate()}"></p>
@@ -141,14 +142,14 @@
 
   </div>
 
-    <footer
-    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-      <!-- Copyright -->
-      <div class="text-white mb-3 mb-md-0">
-          Copyright © 2024. All rights reserved.
-      </div>
-      <!-- Copyright -->
+  <footer
+  class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+        Copyright © 2024. All rights reserved.
+    </div>
+    <!-- Copyright -->
 
-    </footer>
+  </footer>
 </body>
 </html>
