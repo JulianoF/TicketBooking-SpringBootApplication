@@ -39,8 +39,27 @@
           <div class="col-md-6 mx-auto">
             <h2>Your Past Tickets</h2>
 
-            <div class="card mb-3">
-                <p>Past STuff</p>
+            <div th:if="${not #lists.isEmpty(bookings)}">
+              <div th:each="flight : ${bookings}">
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <h5 class="card-title" th:text="'Name: ' + ${flight.getUser().getFirstName()} + ' Last: ' + ${flight.getUser().getLastName()}"></h5>
+                    <p class="card-text" th:text="'Departure Flight: ' + ${flight.getDepartureFlight().getOrigin()}"></p>
+
+                    <p class="card-text" th:if="${not #lists.isEmpty(flight.getReturnFlight)}" th:text="'Return Flight: ' + ${flight.getReturnFlight.getOrigin()}">                    
+                    </p>
+
+                    <p class="card-text" th:text="'Departure Date: ' + ${flight.getBookingDate()}"></p>
+                    <p class="card-text" th:text="'Departure Time: ' + ${flight.getBookingTime()}"></p>
+                    <p class="card-text" th:text="'Total Duration In Minutes: ' + ${flight.getTotalDurationMinutes()}"></p>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(bookings)}">
+              <p>No Return flights found.</p>
             </div>
 
           </div>

@@ -1,5 +1,7 @@
 package net.group18.TicketApplication.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.group18.TicketApplication.entity.Booking;
+import net.group18.TicketApplication.service.CreateBookingService;
 import net.group18.TicketApplication.service.RegisterService;
 
 import org.springframework.ui.Model;
@@ -23,6 +27,9 @@ public class LoginController {
     @Autowired
     private RegisterService registerService;
 
+    @Autowired
+    private CreateBookingService bookService;
+
     @PostMapping("/loginUser")
     public String loginUser(@RequestParam("emailIn") String username, 
                             @RequestParam("password") String password, 
@@ -35,6 +42,10 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
 			System.out.println(authentication);
+
+            List<Booking> bookings = bookService.findByuser_id(Long.valueOf(3));
+		    model.addAttribute("bookings", bookings);
+            System.out.println(bookings.size());
 
             return "pastbooking";
 

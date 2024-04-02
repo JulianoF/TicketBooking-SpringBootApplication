@@ -2,6 +2,10 @@ package net.group18.TicketApplication.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,8 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.group18.TicketApplication.entity.Booking;
+import net.group18.TicketApplication.service.CreateBookingService;
+
 @Controller
 public class HomePageController {
+
+	@Autowired
+    private CreateBookingService bookService;
 
 	@GetMapping("/")
 	public String index(Model model) {
@@ -73,6 +83,9 @@ public class HomePageController {
 			System.out.println(username);
 
 		}
+
+		List<Booking> bookings = bookService.findByuser_id(Long.valueOf(3));
+		model.addAttribute("bookings", bookings);
 
 		return "pastbooking";
 	}

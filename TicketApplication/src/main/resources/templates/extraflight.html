@@ -69,6 +69,14 @@
                         <input type="hidden" name="totalDuration" th:value="${flight.getTotalDuration()}" />
                         <input type="hidden" name="price" th:value="${flight.getPrice()}" />
 
+                        <input type="hidden" name="cOrigin" th:value="${curFlight.getOrigin()}" />
+                        <input type="hidden" name="cDestination" th:value="${curFlight.getDestination()}" />
+                        <input type="hidden" name="cDepartureDate" th:value="${curFlight.getDepartureDate()}" />
+                        <input type="hidden" name="cDepartureTime" th:value="${curFlight.getDepartureTime()}" />
+                        <input type="hidden" name="cTotalDuration" th:value="${curFlight.getTotalDuration()}" />
+                        <input type="hidden" name="cPrice" th:value="${curFlight.getPrice()}" />
+
+                        
                         <!-- Add booking button -->
                         <button type = "submit" class="btn btn-primary">Book Now</button>
                     </div>
