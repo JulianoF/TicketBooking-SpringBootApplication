@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
@@ -13,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import net.group18.TicketApplication.entity.Flight;
 import net.group18.TicketApplication.service.BookingService;
@@ -60,7 +64,7 @@ public class BookingController {
 	}
 
 	
-	@GetMapping("/createbooking")
+	@PostMapping("/createbooking")
 	public String lookup(@RequestParam("origin") String origin,
 						 @RequestParam("destination") String destination,
 						 @RequestParam("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") String departureDate,
@@ -69,8 +73,15 @@ public class BookingController {
 						 @RequestParam("price") String price,
 						 Model model) {
 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
 
+			System.out.println(username);
 
+		}
+		
 		return "booking";
 	}
     

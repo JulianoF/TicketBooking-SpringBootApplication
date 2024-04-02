@@ -23,6 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println(test.getUsername());
         System.out.println(test.getPassword());
 
+        
+
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }

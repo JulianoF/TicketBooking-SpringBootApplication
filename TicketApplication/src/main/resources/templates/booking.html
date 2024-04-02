@@ -67,7 +67,7 @@
             <div th:if="${not #lists.isEmpty(departingFlights)}">
               <div th:each="flight : ${departingFlights}">
                 <div class="card mb-3">
-                  <form action="#" th:action="@{/createbooking}" method="get">
+                  <form action="#" th:action="@{/createbooking}" method="post">
                   <div class="card-body">
                     <h5 class="card-title" th:text="${flight.getOrigin()} + ' to ' + ${flight.getDestination()}"></h5>
                     <p class="card-text" th:text="'Departure Date: ' + ${flight.getDepartureDate()}"></p>
