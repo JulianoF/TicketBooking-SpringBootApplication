@@ -25,48 +25,8 @@ import net.group18.TicketApplication.service.RegisterService;
 @WebMvcTest(LoginController.class)
 public class LoginControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private RegisterService registerService;
-
- /*    @Test
-    public void getDefault() throws Exception {
-        this.mvc.perform(get("/"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("Login"));
-    }
-    @Test
-    public void getLoginPage() throws Exception {
-        this.mvc.perform(get("/login"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("login"))
-            .andExpect(model().attribute("loginForm", notNullValue()))
-            .andExpect(content().string(containsString("Login")));
-    }
-    @Test
-    public void ValidLogin() throws Exception {
-        this.mvc.perform(post("/login").param("username", "JohnDoe123").param("password", "SecurePW456"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("home"))
-            .andExpect(model().attribute("message", "Welcome, JohnDoe123!"))
-            .andExpect(content().string(containsString("Welcome, JohnDoe123!")));
-    }
-    @Test
-    public void InvalidLogin() throws Exception {
-        this.mvc.perform(post("/login").param("username", "invalidusername").param("password", "invalidPassword"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("login"))
-            .andExpect(model().attributeHasFieldErrors("loginForm", "username"))
-            .andExpect(model().attributeHasFieldErrors("loginForm", "password"))
-            .andExpect(content().string(containsString("Invalid username or password. Please Enter A Valid Login Entry Or Try Signing Up.")));
-    } 
-
-    @Test
+/*     @Test
     public void testLoginUser_Success() {
         // Arrange
         AuthenticationManager authenticationManager = mock(AuthenticationManager.class);

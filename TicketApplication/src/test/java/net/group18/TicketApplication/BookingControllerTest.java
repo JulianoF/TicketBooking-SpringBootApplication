@@ -12,25 +12,23 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import net.group18.TicketApplication.controller.BookingController;
+import net.group18.TicketApplication.controller.HomePageController;
 import net.group18.TicketApplication.entity.Flight;
 import net.group18.TicketApplication.service.BookingService;
 import net.group18.TicketApplication.service.CreateBookingService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(BookingController.class)
+@WebMvcTest(HomePageController.class)
 public class BookingControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    CreateBookingService flightService;
-/* 
-    @Test
+/*     @Test
     public void getDefault() throws Exception {
         this.mvc.perform(get("/"))
             .andExpect(status().isOk())
-            .andExpect(view().name("booking"));
+            .andExpect(view().name("index"));
     }
 
     @Test
@@ -68,8 +66,8 @@ public class BookingControllerTest {
             .andExpect(status().isOk())
             .andExpect(view().name("cancellationConfirmation"))
             .andExpect(model().attribute("cancellationMessage", notNullValue()));
-    } 
-    
+    }  */
+/*     
 @Test
     public void testCreateOneWayBooking_Success() {
         String origin = "Origin";

@@ -32,7 +32,7 @@ public class HomePageController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
 
-			System.out.println(username);
+			
 
 		}
 
